@@ -42,6 +42,16 @@ class CameraControl:
         resp = requests.get(url, auth=HTTPDigestAuth(self.__cam_user, self.__cam_password),
                             params=payload)
 
+        print(str(resp))
+
+        string = resp.text
+
+        if "NG" in string:
+            print(string[string.index("NG") + len("NG")+2:])
+
+        if "OK" in string:
+            print(string[string.index("OK") + 0:] + '\n')
+
         if (resp.status_code != 200) and (resp.status_code != 204):
             soup = BeautifulSoup(resp.text, features="lxml")
             logging.error('%s', soup.get_text())
@@ -379,12 +389,13 @@ class CameraControl:
 
         """
 
-        if focus not in ("Near", "Far", "Stop", None):
+        if focus not in ["Far", "Near", "Stop", None]:
             raise Exception("Unauthorized command: Please enter a string from the choices: 'Near', 'Far', or 'Stop'")
 
-        return self._camera_command('ptzcontrol.cgi', {'msubmenu': 'continuous', 'action': 'control',
-                                                       'NormalizedSpeed': normalized_speed, 'Pan': pan,
-                                                       'Tilt': tilt, 'Zoom': zoom, 'Focus': focus})
+        else:
+            return self._camera_command('ptzcontrol.cgi', {'msubmenu': 'continuous', 'action': 'control',
+                                                           'NormalizedSpeed': normalized_speed, 'Pan': pan,
+                                                           'Tilt': tilt, 'Zoom': zoom, 'Focus': focus})
 
     def area_zoom(self, x1: int = None, x2: int = None, y1: int = None,
                   y2: int = None, tilewidth: int = None, tileheight: int = None):
@@ -497,8 +508,7 @@ class CameraControl:
         ptz_list = (pan, tilt, zoom)
 
         if show:
-            print(resp.text)
-            print(ptz_list)
+            print(str(resp.text) + '\n' + str(ptz_list) + '\n')
 
         return ptz_list
 
