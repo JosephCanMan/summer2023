@@ -5,8 +5,8 @@ import datetime
 
 import numpy as np
 
-Camera1 = sunapi_control.CameraControl('10.31.81.246', 'admin', 'why1not#')
-Camera2 = sunapi_config.CameraConfiguration('10.31.81.246', 'admin', 'why1not#')
+Camera1 = sunapi_control.CameraControl('10.31.81.246', 'admin', '')
+Camera2 = sunapi_config.CameraConfiguration('10.31.81.246', 'admin', '')
 
 # Camera1.snap_shot('/home/waggle/... /name_given_to_image.jpg')
 # Camera1.snap_shot()
@@ -15,6 +15,7 @@ Camera2 = sunapi_config.CameraConfiguration('10.31.81.246', 'admin', 'why1not#')
 
 # Camera1.relative_control(pan=-220, tilt=-30,zoom=5)
 # Camera1.continuous_control(normalized_speed=True, pan=40)
+# Camera1.continuous_control(focus='Near')
 # Camera1.stop_control()
 # Camera1.attributes_information()
 # Camera1.area_zoom(1000, 100, 1000, 100)
